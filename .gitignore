@@ -1,0 +1,8 @@
+node_modules/
+portfolio.db
+*.db
+.DS_Store
+.env
+secret/
+vendor/
+npm-debug.log*
