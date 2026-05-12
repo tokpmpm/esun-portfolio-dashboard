@@ -14,7 +14,7 @@ if (environment !== "SIMULATION") {
 console.log("SIMULATION config confirmed.");
 console.log(JSON.stringify({ environment, entry }, null, 2));
 
-const esun = new EsunTrade(readEsunConfig(configPath));
+const esun = new EsunTrade({ config: readEsunConfig(configPath) });
 await esun.login();
 
 const order = new Order({

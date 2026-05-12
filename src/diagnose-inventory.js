@@ -44,7 +44,7 @@ console.log(
   )
 );
 
-const esun = new EsunTrade(parsedConfig);
+const esun = new EsunTrade({ config: parsedConfig });
 await esun.login();
 
 const balance = await esun.getBalance();
