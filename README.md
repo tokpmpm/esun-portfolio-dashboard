@@ -56,8 +56,8 @@ another broker, keep them in:
 manual-positions.json
 ```
 
-`npm run sync` combines:
+`npm run sync` uses:
 
 - Esun cash from `getBalance()`
-- Esun positions from `getInventories()`
-- manual positions from `manual-positions.json`
+- Esun positions from `getInventories()` when available
+- manual positions from `manual-positions.json` only when Esun inventory is empty

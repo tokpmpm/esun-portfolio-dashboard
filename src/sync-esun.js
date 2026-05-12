@@ -61,7 +61,8 @@ const manualPositions = fs.existsSync(manualPositionsPath)
     })
   : [];
 
-const combinedPositions = [...manualPositions, ...positions];
+const useManualPositions = positions.length === 0;
+const combinedPositions = useManualPositions ? manualPositions : positions;
 
 const stockValue = combinedPositions.reduce((sum, x) => sum + x.marketValue, 0);
 const cash = n(balance?.availableBalance);
@@ -113,7 +114,14 @@ db.transaction(() => {
     totalAssets,
     dailyPnl,
     monthlyPnl,
-    JSON.stringify({ manualPositions, inventories, settlements, transactions, balance })
+    JSON.stringify({
+      useManualPositions,
+      manualPositions,
+      inventories,
+      settlements,
+      transactions,
+      balance
+    })
   );
 
   for (const p of combinedPositions) {
@@ -138,8 +146,9 @@ console.log(
       stockValue,
       cash,
       totalAssets,
-      dailyPnl,
+  dailyPnl,
   monthlyPnl,
+  useManualPositions,
   manualPositionCount: manualPositions.length,
   esunPositionCount: positions.length,
   positionCount: combinedPositions.length
