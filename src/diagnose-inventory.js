@@ -1,34 +1,18 @@
 import { EsunTrade } from "esun-trade";
 import fs from "fs";
+import { readIniValue } from "./config.js";
 
 const configPath = "../secret/config.ini";
-const text = fs.readFileSync(configPath, "utf8");
-
-function readIniValue(section, key) {
-  const lines = text.split(/\r?\n/);
-  let inSection = false;
-  for (const line of lines) {
-    const sectionMatch = line.match(/^\s*\[([^\]]+)\]\s*$/);
-    if (sectionMatch) {
-      inSection = sectionMatch[1].trim().toLowerCase() === section.toLowerCase();
-      continue;
-    }
-    if (!inSection) continue;
-    const valueMatch = line.match(new RegExp(`^\\s*${key}\\s*=\\s*(.*?)\\s*$`, "i"));
-    if (valueMatch) return valueMatch[1];
-  }
-  return "";
-}
 
 function mask(value) {
   if (!value) return "";
   return value.length <= 4 ? "****" : `${value.slice(0, 2)}****${value.slice(-2)}`;
 }
 
-const account = readIniValue("User", "Account");
-const environment = readIniValue("Core", "Environment");
-const entry = readIniValue("Core", "Entry");
-const certPath = readIniValue("Cert", "Path");
+const account = readIniValue(configPath, "User", "Account");
+const environment = readIniValue(configPath, "Core", "Environment");
+const entry = readIniValue(configPath, "Core", "Entry");
+const certPath = readIniValue(configPath, "Cert", "Path");
 
 console.log("CONFIG_CHECK");
 console.log(

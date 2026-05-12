@@ -8,6 +8,7 @@
     "dev": "node src/server.js",
     "probe": "node src/probe-account.js",
     "diagnose": "node src/diagnose-inventory.js",
+    "simulation:test": "node src/run-simulation-test.js",
     "clear:keychain": "node src/clear-esun-keychain.js"
   },
   "dependencies": {
