@@ -20,3 +20,13 @@ export function readIniValue(configPath, section, key) {
 
   return "";
 }
+
+export function readEsunConfig(configPath = "../secret/config.ini") {
+  return {
+    apiUrl: readIniValue(configPath, "Core", "Entry"),
+    apiKey: readIniValue(configPath, "Api", "Key"),
+    apiSecret: readIniValue(configPath, "Api", "Secret"),
+    certPath: readIniValue(configPath, "Cert", "Path"),
+    aid: readIniValue(configPath, "User", "Account")
+  };
+}

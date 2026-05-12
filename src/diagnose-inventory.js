@@ -1,6 +1,6 @@
 import { EsunTrade } from "esun-trade";
 import fs from "fs";
-import { readIniValue } from "./config.js";
+import { readEsunConfig, readIniValue } from "./config.js";
 
 const configPath = "../secret/config.ini";
 
@@ -28,7 +28,23 @@ console.log(
   )
 );
 
-const esun = new EsunTrade({ configPath });
+const parsedConfig = readEsunConfig(configPath);
+console.log("SDK_CONFIG_CHECK");
+console.log(
+  JSON.stringify(
+    {
+      apiUrl: parsedConfig.apiUrl,
+      apiKey: parsedConfig.apiKey ? "***" : "",
+      apiSecret: parsedConfig.apiSecret ? "***" : "",
+      certPathExists: parsedConfig.certPath ? fs.existsSync(parsedConfig.certPath) : false,
+      aid: mask(parsedConfig.aid)
+    },
+    null,
+    2
+  )
+);
+
+const esun = new EsunTrade(parsedConfig);
 await esun.login();
 
 const balance = await esun.getBalance();

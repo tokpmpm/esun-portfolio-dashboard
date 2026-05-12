@@ -1,5 +1,5 @@
 import { EsunTrade, Order } from "esun-trade";
-import { readIniValue } from "./config.js";
+import { readEsunConfig, readIniValue } from "./config.js";
 
 const configPath = "../secret/config.ini";
 const environment = readIniValue(configPath, "Core", "Environment");
@@ -14,7 +14,7 @@ if (environment !== "SIMULATION") {
 console.log("SIMULATION config confirmed.");
 console.log(JSON.stringify({ environment, entry }, null, 2));
 
-const esun = new EsunTrade({ configPath });
+const esun = new EsunTrade(readEsunConfig(configPath));
 await esun.login();
 
 const order = new Order({
