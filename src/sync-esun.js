@@ -1,8 +1,10 @@
 import { EsunTrade } from "esun-trade";
 import { db } from "./db.js";
+import fs from "fs";
 
 const esun = new EsunTrade({ configPath: "../secret/config.ini" });
 const today = new Date().toISOString().slice(0, 10);
+const manualPositionsPath = new URL("../manual-positions.json", import.meta.url);
 
 function n(value) {
   const parsed = Number(String(value ?? 0).replace(/,/g, ""));
@@ -41,7 +43,26 @@ const positions = Array.isArray(inventories)
     })
   : [];
 
-const stockValue = positions.reduce((sum, x) => sum + x.marketValue, 0);
+const manualPositions = fs.existsSync(manualPositionsPath)
+  ? JSON.parse(fs.readFileSync(manualPositionsPath, "utf8")).map((x) => {
+      const quantity = n(x.quantity);
+      const marketValue = n(x.marketValue);
+      const price = n(x.price) || (quantity ? marketValue / quantity : 0);
+      return {
+        symbol: String(x.symbol ?? ""),
+        name: String(x.name ?? ""),
+        quantity,
+        price,
+        marketValue,
+        unrealizedPnl: n(x.unrealizedPnl),
+        raw: { ...x, source: "manual" }
+      };
+    })
+  : [];
+
+const combinedPositions = [...manualPositions, ...positions];
+
+const stockValue = combinedPositions.reduce((sum, x) => sum + x.marketValue, 0);
 const cash = n(balance?.availableBalance);
 const totalAssets = stockValue + cash;
 
@@ -91,10 +112,10 @@ db.transaction(() => {
     totalAssets,
     dailyPnl,
     monthlyPnl,
-    JSON.stringify({ inventories, settlements, transactions, balance })
+    JSON.stringify({ manualPositions, inventories, settlements, transactions, balance })
   );
 
-  for (const p of positions) {
+  for (const p of combinedPositions) {
     insertPosition.run(
       result.lastInsertRowid,
       p.symbol,
@@ -117,8 +138,10 @@ console.log(
       cash,
       totalAssets,
       dailyPnl,
-      monthlyPnl,
-      positionCount: positions.length
+  monthlyPnl,
+  manualPositionCount: manualPositions.length,
+  esunPositionCount: positions.length,
+  positionCount: combinedPositions.length
     },
     null,
     2

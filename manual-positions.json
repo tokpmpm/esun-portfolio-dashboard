@@ -1,0 +1,18 @@
+[
+  { "symbol": "3211", "name": "順達科", "quantity": 25, "marketValue": 10075 },
+  { "symbol": "00692", "name": "富邦公司治理", "quantity": 31726, "marketValue": 2685606 },
+  { "symbol": "006208", "name": "富邦台50", "quantity": 1000, "marketValue": 224450 },
+  { "symbol": "00902", "name": "中信電池及儲能", "quantity": 7144, "marketValue": 123305 },
+  { "symbol": "00981A", "name": "主動統一台股", "quantity": 3000, "marketValue": 89070 },
+  { "symbol": "00965", "name": "元大航太防衛科技", "quantity": 3000, "marketValue": 77310 },
+  { "symbol": "8936", "name": "國統", "quantity": 1000, "marketValue": 50600 },
+  { "symbol": "0050", "name": "元大台灣50", "quantity": 402, "marketValue": 38954 },
+  { "symbol": "2376", "name": "技嘉", "quantity": 120, "marketValue": 38940 },
+  { "symbol": "009816", "name": "凱基台灣TOP50", "quantity": 1994, "marketValue": 28215 },
+  { "symbol": "2382", "name": "廣達", "quantity": 45, "marketValue": 15458 },
+  { "symbol": "8299", "name": "群聯", "quantity": 5, "marketValue": 13350 },
+  { "symbol": "00988A", "name": "主動統一全球創新", "quantity": 369, "marketValue": 7018 },
+  { "symbol": "3017", "name": "奇鋐", "quantity": 2, "marketValue": 5110 },
+  { "symbol": "2727", "name": "王品", "quantity": 1, "marketValue": 235 },
+  { "symbol": "1432", "name": "大魯閣", "quantity": 1, "marketValue": 17 }
+]

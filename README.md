@@ -33,3 +33,18 @@ http://localhost:8787
 ```
 
 No order APIs are used.
+
+## Manual Positions
+
+Esun API only returns positions held in the Esun account. If your stocks are at
+another broker, keep them in:
+
+```text
+manual-positions.json
+```
+
+`npm run sync` combines:
+
+- Esun cash from `getBalance()`
+- Esun positions from `getInventories()`
+- manual positions from `manual-positions.json`
