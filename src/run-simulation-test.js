@@ -29,7 +29,23 @@ const order = new Order({
 });
 
 console.log("Placing official-doc simulation order: buy 2884 x 1 at limit-down.");
-const result = await esun.placeOrder(order);
+let result;
+try {
+  result = await esun.placeOrder(order);
+} catch (err) {
+  if (String(err?.message || err).includes("AGA0008")) {
+    console.error("SIMULATION_ORDER_SCOPE_ERROR");
+    console.error(
+      [
+        "Esun rejected the simulation order with AGA0008: Invalid Scope.",
+        "This API key can log in and query account data, but it is not allowed to call placeOrder().",
+        "The official Esun simulation prerequisite requires a simulation order, so use the Esun API key site to create/download a simulation trading key with order scope.",
+        "If you intentionally only applied for account inquiry, skip this simulation order test and keep using the dashboard in read-only mode."
+      ].join("\n")
+    );
+  }
+  throw err;
+}
 
 console.log("SIMULATION_ORDER_RESULT");
 console.log(JSON.stringify(result ?? { ok: true }, null, 2));
