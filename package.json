@@ -7,6 +7,7 @@
     "sync": "node src/sync-esun.js",
     "dev": "node src/server.js",
     "probe": "node src/probe-account.js",
+    "diagnose": "node src/diagnose-inventory.js",
     "clear:keychain": "node src/clear-esun-keychain.js"
   },
   "dependencies": {
